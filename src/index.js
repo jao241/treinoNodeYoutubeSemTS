@@ -16,8 +16,23 @@ app.use(express.json());
 
 const projects = []; 
 
+//Adicionando um middleware
+
+function logRoutes(request, response, next){
+    const { method, url } = request;
+
+    const route = `[${method.toUpperCase()}] ${url}`;
+
+    console.log(route);
+    return next();
+}
+
+//Um middleware para toda a aplicação
+
+// app.use(logRoutes);
+
 //Resposta a requisição com o método GET
-app.get('/projects', (request, response) =>{
+app.get('/projects', logRoutes, (request, response) =>{
     //Restringe os parâmetros de consulta
     // const {title, owner} = request.query;
     // console.log(title);
